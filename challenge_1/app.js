@@ -1,8 +1,6 @@
 const app = () => {
   
   let turns = 'player x';
-  // let lastRoundWinner;
-  // turns = lastRoundWinner;
 
   let boardArray = [
     [0, 0, 0],
@@ -97,9 +95,8 @@ const app = () => {
 
   const win = (player) => {
     winnerExists = true;
-    document.getElementById("message").innerHTML = `<h2>🎉 ${turns} wins! 🎉</h2>`;
+    document.getElementById("message").innerHTML = `<h2>🎉 ${player} wins! 🎉</h2>`;
     board.onclick = '';
-    lastRoundWinner = player;
   }
 }
 
