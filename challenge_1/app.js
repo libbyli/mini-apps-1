@@ -52,7 +52,7 @@ const app = () => {
     }
 
     if (emptyBoard && !winnerExists) {
-      alert('tie!');
+      document.getElementById("message").innerHTML = `<h2>it's a tie!</h2>`;
     }
 
   }
