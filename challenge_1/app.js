@@ -1,5 +1,8 @@
 const app = () => {
-  let turns = 'player X';
+  
+  let turns = 'player x';
+  // let lastRoundWinner;
+  // turns = lastRoundWinner;
 
   let boardArray = [
     [0, 0, 0],
@@ -11,7 +14,7 @@ const app = () => {
 
   const addXO = (event) => {
     if (event.target.innerHTML.length === 0) {
-      if (turns === 'player X') {
+      if (turns === 'player x') {
         event.target.innerHTML = '<center>X</center>';
         boardArray[Math.floor(event.target.id/3)][event.target.id%3] = 'X';
         checkWins();
@@ -28,10 +31,10 @@ const app = () => {
   board.onclick=addXO;
 
   const switchTurns = () => {
-    if (turns === 'player X') {
-      turns = 'player O';
+    if (turns === 'player x') {
+      turns = 'player o';
     } else {
-      turns = 'player X';
+      turns = 'player x';
     }
   }
 
@@ -92,26 +95,26 @@ const app = () => {
     } 
   }
 
-  const win = (turns) => {
+  const win = (player) => {
     winnerExists = true;
-    alert(`${turns} wins!`);
+    document.getElementById("message").innerHTML = `<h2>🎉 ${turns} wins! 🎉</h2>`;
     board.onclick = '';
+    lastRoundWinner = player;
   }
+}
 
-  const cells = document.getElementsByTagName('td');
-
-  const handleClick = () => {
-    for (let i = 0; i < cells.length; i+=1) {
-      cells[i].innerHTML = '';
-    }
-    boardArray = [
-      [0, 0, 0],
-      [0, 0, 0],
-      [0, 0, 0]
-    ];
+const cells = document.getElementsByTagName('td');
+const handleClick = () => {
+  for (let i = 0; i < cells.length; i+=1) {
+    cells[i].innerHTML = '';
   }
-  
-  document.getElementById('button').onclick=handleClick;
+  document.getElementById("message").innerHTML = '';
+  boardArray = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ];
+  app();
 }
 
 document.addEventListener('DOMContentLoaded', app);

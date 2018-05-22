@@ -2,16 +2,26 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-h1 {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 26px;
-}
-
 table {
   border: 1px solid black;
 }
 
 td {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
+}
+
+button {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #000000;
+  color: #000000;
+  background-color: #FFFFFF;
+  font-size: 12px;
+}
+
+button:hover {
+  color: #FFFFFF;
+  background-color: #000000;
 }
