@@ -17,7 +17,7 @@ const app = {
       data: JSON.stringify(input),
       contentType: 'application/json',
       success: (data) => {
-        console.log('data------> ', data);
+        console.log('data: ', data);
       },
       error(error) {
         console.error('error: ', error)
@@ -40,6 +40,6 @@ const app = {
   }
 }
 
-$(document).ready(function() {
-  app.init();
-});
+$(document).ready(() =>
+  app.init()
+);
