@@ -1,22 +1,11 @@
 const app = () => {
   let turns = 'player X';
 
-  const boardArray = [
+  let boardArray = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0]
   ];
-
-  // const wins = [
-  //   [0, 1, 2],
-  //   [3, 4, 5],
-  //   [6, 7, 8],
-  //   [0, 3, 6],
-  //   [1, 4, 7],
-  //   [2, 5, 8],
-  //   [0, 4, 8],
-  //   [2, 4, 6],
-  // ];
 
   let winnerExists = false; 
 
@@ -108,6 +97,21 @@ const app = () => {
     alert(`${turns} wins!`);
     board.onclick = '';
   }
+
+  const cells = document.getElementsByTagName('td');
+
+  const handleClick = () => {
+    for (let i = 0; i < cells.length; i+=1) {
+      cells[i].innerHTML = '';
+    }
+    boardArray = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0]
+    ];
+  }
+  
+  document.getElementById('button').onclick=handleClick;
 }
 
 document.addEventListener('DOMContentLoaded', app);
