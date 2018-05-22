@@ -1,7 +1,5 @@
 const app = () => {
   let turns = 'player X';
-  const board = document.getElementById('board');
-  const cells = board.getElementsByTagName('td');
 
   const boardArray = [
     [0, 0, 0],
@@ -9,16 +7,18 @@ const app = () => {
     [0, 0, 0]
   ];
 
-  const wins = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
+  // const wins = [
+  //   [0, 1, 2],
+  //   [3, 4, 5],
+  //   [6, 7, 8],
+  //   [0, 3, 6],
+  //   [1, 4, 7],
+  //   [2, 5, 8],
+  //   [0, 4, 8],
+  //   [2, 4, 6],
+  // ];
+
+  let winnerExists = false; 
 
   const addXO = (event) => {
     if (event.target.innerHTML.length === 0) {
@@ -35,6 +35,9 @@ const app = () => {
     } 
   }
 
+  const board = document.getElementById('board');
+  board.onclick=addXO;
+
   const switchTurns = () => {
     if (turns === 'player X') {
       turns = 'player O';
@@ -44,13 +47,27 @@ const app = () => {
   }
 
   const checkWins = () => {
-    for (let i = 0; i < boardArray.length; i += 1) {
-      checkRows(boardArray[i]);
-      checkColumns(i);
+    for (let row = 0; row < boardArray.length; row += 1) {
+      checkRows(boardArray[row]);
     }
+    checkColumns();
+    checkDiagonals();
+
+    let emptyBoard = true;
+
+    for (let row = 0; row < boardArray.length; row += 1) {
+      if (boardArray[row].includes(0)) {
+        emptyBoard = false;
+      }
+    }
+
+    if (emptyBoard && !winnerExists) {
+      alert('tie!');
+    }
+
   }
 
-  const checkRows = row => {
+  const checkRows = (row) => {
     for (let i = 0; i < row.length; i+=1) {
       let checkX = element => {
         return element === 'X';
@@ -59,34 +76,37 @@ const app = () => {
         return element === 'O';
       }
       if (row.every(checkX)) {
-        onWin(turns);
+        win(turns);
         return;
       } else if (row.every(checkO)) {
-        onWin(turns);
+        win(turns);
         return;
       }
     }
   }
 
-  const checkColumns = row => {
+  const checkColumns = () => {
     for (let i = 0; i < 3; i += 1) {
-      if (boardArray[row][i] === 'X' && boardArray[row+1][i] === 'X' && boardArray[row+2][i] === 'X') {
-        onWin(turns);
-      } else if (boardArray[row][i] === 'O' && boardArray[row][i] === 'O' && boardArray[row+2][i] === 'O') {
-        onWin(turns);
+      if (boardArray[0][i] === 'X' && boardArray[1][i] === 'X' && boardArray[2][i] === 'X') {
+        win(turns);
+      } else if (boardArray[0][i] === 'O' && boardArray[1][i] === 'O' && boardArray[2][i] === 'O') {
+        win(turns);
       }
     }
   }
 
-  const onWin = (turns) => {
-    alert(`${turns} wins!`);
-    for (let j = 0; j < cells.length; j += 1) {
-      cells[j].onclick = '';
-    }
+  const checkDiagonals = () => {
+    if ((boardArray[0][0] === 'X' && boardArray[1][1] === 'X' && boardArray[2][2] === 'X') || (boardArray[0][2] === 'X' && boardArray[1][1] === 'X' && boardArray[2][0] === 'X')) {
+      win(turns);
+    } else if ((boardArray[0][0] === 'O' && boardArray[1][1] === 'O' && boardArray[2][2] === 'O') || (boardArray[0][2] === 'O' && boardArray[1][1] === 'O' && boardArray[2][0] === 'O')) {
+      win(turns);
+    } 
   }
 
-  for (let i = 0; i < cells.length; i += 1) {
-    cells[i].onclick = addXO;
+  const win = (turns) => {
+    winnerExists = true;
+    alert(`${turns} wins!`);
+    board.onclick = '';
   }
 }
 
