@@ -31,7 +31,7 @@ const app = {
       type: 'GET',
       data: {},
       success: (data) => {
-        $('#output').append(`<span>${data}</span>`);
+        $('#output').append(`${data}`);
       },
       error: (error) => {
         console.error('error: ', error);
