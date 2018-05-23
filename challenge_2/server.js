@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const helper = require('./helper');
+const helper = require('./helper.js')
 
 app.listen(27016);
 
@@ -17,7 +17,8 @@ app.get('/input', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-  let output = helper.formatData(req.body.text);
+  console.log(req.body)
+  let output = helper.formatData(req.body);
   fs.writeFile('./data.csv', output, (err) => {
     if (err) throw err;
   });

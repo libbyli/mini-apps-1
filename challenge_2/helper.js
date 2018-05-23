@@ -1,5 +1,4 @@
 exports.formatData = obj => {
-  obj = JSON.parse(obj);
   const result = [];
   const keys = [1];
   const objKeys = Object.keys(obj);
@@ -40,5 +39,6 @@ exports.formatData = obj => {
     entry.join(',')
   )).join('\n');
 
+  console.log(stringResult);
   return stringResult;
 }

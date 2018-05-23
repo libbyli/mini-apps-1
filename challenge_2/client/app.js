@@ -3,10 +3,8 @@ const app = {
   init() {
     $('form').on('submit', function(e){
       e.preventDefault();
-      let input = {
-        text: $('textarea').val()
-      }
-      app.send(JSON.stringify(input));
+      let input = $('textarea').val();
+      app.send(input);
     });
   },
 
