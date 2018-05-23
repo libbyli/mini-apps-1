@@ -6,6 +6,7 @@ class App extends React.Component {
       f1: false,
       f2: false,
       confirmation: false,
+      information: [],
     };
   }
 
@@ -16,37 +17,74 @@ class App extends React.Component {
     });
   }
 
-  handleF1Click() {
+  handleF1Click(input) {
     this.setState({
       f1: false,
       f2: true,
     })
+    console.log(input);
+    // let keys = Object.keys(input);
+    // console.log(keys);
+    // for (let i = 0; i < keys.length; i += 1) {
+    // }
+    this.send(JSON.stringify(input));
   }
 
-  handleF2Click() {
+  handleF2Click(input) {
     this.setState({
       f2: false,
       f3: true,
     })
+    console.log(input);
   }
 
-  handleF3Click() {
+  handleF3Click(input) {
     this.setState({
       f3: false,
       confirmation: true,
     })
+    console.log(input);
   }
 
   handlePurchaseClick() {
   }
 
+  // componentDidMount() {
+  // }
 
-
+  send(input) {
+    // $.ajax({
+    //   type: 'POST',
+    //   url: '/',
+    //   data: input,
+    //   contentType: 'application/json',
+    //   success: (data) => {
+    //     console.log(data);
+    //   },
+    //   error(error) {
+    //     console.error('error: ', error)
+    //   }
+    // });
+    $.post("/", input, (data) => {
+      console.log(data);
+    }).done(() => {
+      console.log('success');
+    }).fail(() => {
+      console.log('fail');
+    });
+  }
 
   render() {
     let button;
     if (this.state.checkout) {
-      button = <div><button id="checkout" onClick={this.handleCheckout.bind(this)}>Checkout</button></div>
+      button = 
+        <div>
+          <button 
+          id="checkout" 
+          onClick={this.handleCheckout.bind(this)}
+          >Checkout
+          </button>
+        </div>
     };
 
     let f1;
@@ -94,7 +132,7 @@ class F1 extends React.Component {
   }
 
   handleInputChange(event) {
-    const target = event.target.value;
+    const target = event.target;
     const value = target.value;
     const name = target.name;
 
@@ -109,92 +147,203 @@ class F1 extends React.Component {
         <form>
           <div>
             <label>Name: </label>
-            <input type="text" id="name" name="name" onChange={this.handleInputChange} />
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              onChange={this.handleInputChange} />
           </div>
           <div>
             <label>Email: </label>
-            <input type="email" id="email" name="email" onChange={this.handleInputChange}/>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              onChange={this.handleInputChange}/>
           </div>
           <div>
             <label>Password: </label>
-            <input type="password" id="password" name="password" onChange={this.handleInputChange}/>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              onChange={this.handleInputChange}/>
           </div>
         </form>
         <div className="button">
-          <button type="submit" onClick={this.props.handleF1Click}>Next</button>
+          <button 
+            type="submit" 
+            onClick={(e) => this.props.handleF1Click(this.state)}
+          >Next</button>
         </div>
       </div>
     );
   }
 }
 
-const F2 = (props) => {
-  return (
-    <div id="f2">
-      <form>
-        <div>
-          <label>Address Line 1: </label>
-          <input type="text" id="address_line1" name="user_address_line1" />
+class F2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address_line1: '',
+      address_line2: '',
+      address_city: '',
+      address_state: '',
+      zipcode: 0,
+      phone: 0,
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render() {
+    return (
+      <div id="f2">
+        <form>
+          <div>
+            <label>Address Line 1: </label>
+            <input 
+              type="text" 
+              id="address_line1" 
+              name="address_line1"
+              onChange={this.handleInputChange} />
+          </div>
+          <div>
+            <label>Address Line 2: </label>
+            <input 
+              type="text" 
+              id="address_line2" 
+              name="address_line2"
+              onChange={this.handleInputChange} />
+          </div>
+          <div>
+            <label>City: </label>
+            <input 
+            type="text" 
+            id="address_city" 
+            name="address_city" 
+            onChange={this.handleInputChange}/>
+          </div>
+          <div>
+            <label>State: </label>
+            <input 
+              type="text" 
+              id="address_state" 
+              name="address_state"
+              onChange={this.handleInputChange} />
+          </div>
+          <div>
+            <label>Zip Code: </label>
+            <input 
+              type="number" 
+              id="address_zipcode" 
+              name="zipcode" 
+              onChange={this.handleInputChange}/>
+          </div>
+          <div>
+            <label>Phone: </label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              onChange={this.handleInputChange}/>
+          </div>
+        </form>
+        <div className="button">
+          <button 
+            type="submit" 
+            onClick={(e) => this.props.handleF2Click(this.state)}
+          >Next</button>
         </div>
-        <div>
-          <label>Address Line 2: </label>
-          <input type="text" id="address_line2" name="user_address_line2" />
-        </div>
-        <div>
-          <label>City: </label>
-          <input type="text" id="address_city" name="user_address_city" />
-        </div>
-        <div>
-          <label>State: </label>
-          <input type="text" id="address_state" name="user_address_state" />
-        </div>
-        <div>
-          <label>Zip Code: </label>
-          <input type="number" id="address_zipcode" name="user_zipcode" />
-        </div>
-        <div>
-          <label>Phone: </label>
-          <input type="tel" id="phone" name="user_phone" />
-        </div>
-      </form>
-      <div className="button">
-        <button type="submit" onClick={props.handleF2Click}>Next</button>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-const F3 = (props) => {
-  return (
-    <div id="f3">
-      <form>
-        <div>
-          <label>Credit Card Number: </label>
-          <input type="number" id="ccnumber" name="user_ccnumber" />
+class F3 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cc: 0,
+      expirydate: '',
+      cvv: 0,
+      billing_zipcode: 0,
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render() {
+    return (
+      <div id="f3">
+        <form>
+          <div>
+            <label>Credit Card Number: </label>
+            <input 
+              type="number" 
+              id="cc" 
+              name="cc" 
+              onChange={this.handleInputChange}/>
+          </div>
+          <div>
+            <label>Expiration Date: </label>
+            <input 
+              type="text" 
+              id="expirydate" 
+              name="expirydate" 
+              onChange={this.handleInputChange}/>
+          </div>
+          <div>
+            <label>CVV: </label>
+            <input 
+              type="number" 
+              id="cvv" 
+              name="cvv" 
+              onChange={this.handleInputChange}/>
+          </div>
+          <div>
+            <label>Billing Zip Code: </label>
+            <input 
+              type="number" 
+              id="billing_zipcode" 
+              name="billing_zipcode" 
+              onChange={this.handleInputChange}/>
+          </div>
+        </form>
+        <div className="button">
+          <button 
+            type="submit" 
+            onClick={(e) => this.props.handleF3Click(this.state)}
+          >Next</button>
         </div>
-        <div>
-          <label>Expiration Date: </label>
-          <input type="text" id="expirydate" name="user_expirydate" />
-        </div>
-        <div>
-          <label>CVV: </label>
-          <input type="number" id="cvv" name="user_cvv" />
-        </div>
-        <div>
-          <label>Billing Zip Code: </label>
-          <input type="number" id="address_billing_zipcode" name="user_billing_zipcode" />
-        </div>
-      </form>
-      <div className="button">
-        <button type="submit" onClick={props.handleF3Click}>Next</button>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 const Confirmation = (props) => {
   return (
-    test
+    <div>test</div>
   )
 }
 
