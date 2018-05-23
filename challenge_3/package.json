@@ -1,0 +1,26 @@
+{
+  "name": "challenge_3",
+  "version": "1.0.0",
+  "description": "shopping cart checkout experience with express, react, mongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "postinstall": "babel client --out-dir public --presets=env,react --source-maps inline --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libbyli/hrsf95-mini-apps-1.git"
+  },
+  "author": "libby li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/libbyli/hrsf95-mini-apps-1/issues"
+  },
+  "homepage": "https://github.com/libbyli/hrsf95-mini-apps-1#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.16.3"
+  }
+}
