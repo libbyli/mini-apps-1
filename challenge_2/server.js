@@ -17,7 +17,6 @@ app.get('/input', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-  console.log(req.body)
   let output = helper.formatData(req.body);
   fs.writeFile('./data.csv', output, (err) => {
     if (err) throw err;

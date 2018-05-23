@@ -39,6 +39,5 @@ exports.formatData = obj => {
     entry.join(',')
   )).join('\n');
 
-  console.log(stringResult);
   return stringResult;
 }

@@ -27,7 +27,6 @@ const app = {
     $.ajax({
       url: '/input',
       type: 'GET',
-      data: {},
       success: (data) => {
         $('#output').html(`${data}`);
       },
