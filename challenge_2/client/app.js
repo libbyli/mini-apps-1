@@ -6,7 +6,7 @@ const app = {
       let input = {
         text: $('textarea').val()
       }
-      app.send(input);
+      app.send(JSON.stringify(input));
     });
   },
 
@@ -14,10 +14,10 @@ const app = {
     $.ajax({
       url: '/',
       type: 'POST',
-      data: JSON.stringify(input),
+      data: input,
       contentType: 'application/json',
       success: (data) => {
-        console.log('data: ', data);
+        app.fetch();
       },
       error(error) {
         console.error('error: ', error)
@@ -27,13 +27,13 @@ const app = {
 
   fetch() {
     $.ajax({
-      url: '/',
+      url: '/input',
       type: 'GET',
       data: {},
       success: (data) => {
-        console.log('data: ', data);
+        $('#output').append(`<span>${data}</span>`);
       },
-      error: (data) => {
+      error: (error) => {
         console.error('error: ', error);
       }
     })
