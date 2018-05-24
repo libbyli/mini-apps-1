@@ -10,8 +10,12 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-  console.log('request body: ', req.body);
-  console.log('post request worked');
-  // db.connection();
+  db.connection(req.body);
   res.send('');
+});
+
+app.get('/result', (req, res) => {
+  db.connection((result) => {
+    res.send(result);
+  });
 });

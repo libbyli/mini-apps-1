@@ -70,10 +70,26 @@ class App extends React.Component {
       data: input,
       contentType: 'application/json',
       success: (data) => {
-        console.log(data);
+        this.fetch();
+        console.log('data sent');
       },
-      error(error) {
-        console.error('error: ', error)
+      error: (error) => {
+        console.log('error: ', error)
+      }
+    });
+  }
+
+  fetch() {
+    console.log('fetch was called');
+    $.ajax({
+      type: 'GET',
+      url: '/result',
+      success: (data) => {
+        console.log('data --------> ', data);
+        console.log('data received');
+      },
+      error: (error) => {
+        console.log('error: ', error)
       }
     });
   }
