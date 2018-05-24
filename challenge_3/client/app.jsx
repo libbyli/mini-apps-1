@@ -22,12 +22,12 @@ class App extends React.Component {
       f1: false,
       f2: true,
     })
-    console.log(input);
-    // let keys = Object.keys(input);
-    // console.log(keys);
-    // for (let i = 0; i < keys.length; i += 1) {
-    // }
-    this.send(JSON.stringify(input));
+    let keys = Object.keys(input);
+    for (let i = 0; i < keys.length; i += 1) {
+      let obj = {};
+      obj[keys[i]] = input[keys[i]];
+      this.state.information.push(obj);
+    }
   }
 
   handleF2Click(input) {
@@ -35,7 +35,12 @@ class App extends React.Component {
       f2: false,
       f3: true,
     })
-    console.log(input);
+    let keys = Object.keys(input);
+    for (let i = 0; i < keys.length; i += 1) {
+      let obj = {};
+      obj[keys[i]] = input[keys[i]];
+      this.state.information.push(obj);
+    }
   }
 
   handleF3Click(input) {
@@ -43,7 +48,13 @@ class App extends React.Component {
       f3: false,
       confirmation: true,
     })
-    console.log(input);
+    let keys = Object.keys(input);
+    for (let i = 0; i < keys.length; i += 1) {
+      let obj = {};
+      obj[keys[i]] = input[keys[i]];
+      this.state.information.push(obj);
+    }
+    this.send(JSON.stringify(this.state.information));
   }
 
   handlePurchaseClick() {
@@ -53,24 +64,17 @@ class App extends React.Component {
   // }
 
   send(input) {
-    // $.ajax({
-    //   type: 'POST',
-    //   url: '/',
-    //   data: input,
-    //   contentType: 'application/json',
-    //   success: (data) => {
-    //     console.log(data);
-    //   },
-    //   error(error) {
-    //     console.error('error: ', error)
-    //   }
-    // });
-    $.post("/", input, (data) => {
-      console.log(data);
-    }).done(() => {
-      console.log('success');
-    }).fail(() => {
-      console.log('fail');
+    $.ajax({
+      type: 'POST',
+      url: '/',
+      data: input,
+      contentType: 'application/json',
+      success: (data) => {
+        console.log(data);
+      },
+      error(error) {
+        console.error('error: ', error)
+      }
     });
   }
 
