@@ -7,6 +7,7 @@ class App extends React.Component {
       f2: false,
       confirmation: false,
       information: [],
+      displayData: [],
     };
   }
 
@@ -58,10 +59,11 @@ class App extends React.Component {
   }
 
   handlePurchaseClick() {
+    this.setState({
+      confirmation: false,
+      checkout: true,
+    });
   }
-
-  // componentDidMount() {
-  // }
 
   send(input) {
     $.ajax({
@@ -70,23 +72,10 @@ class App extends React.Component {
       data: input,
       contentType: 'application/json',
       success: (data) => {
-        this.fetch();
+        this.setState({
+          displayData: data,
+        });
         console.log('data sent');
-      },
-      error: (error) => {
-        console.log('error: ', error)
-      }
-    });
-  }
-
-  fetch() {
-    console.log('fetch was called');
-    $.ajax({
-      type: 'GET',
-      url: '/result',
-      success: (data) => {
-        console.log('data --------> ', data);
-        console.log('data received');
       },
       error: (error) => {
         console.log('error: ', error)
@@ -124,7 +113,11 @@ class App extends React.Component {
 
     let confirmation;
     if (this.state.confirmation) {
-      confirmation = <Confirmation handlePurchaseClick={this.handlePurchaseClick.bind(this)} />
+      confirmation = 
+        <ConfirmationList 
+          displayData={this.state.displayData} 
+          handlePurchaseClick={this.handlePurchaseClick.bind(this)} 
+        />
     }
 
     return (
@@ -361,10 +354,25 @@ class F3 extends React.Component {
   }
 }
 
-const Confirmation = (props) => {
-  return (
-    <div>test</div>
-  )
-}
+const ConfirmationList = (props) => (
+  <div id="confirmation">
+    {props.displayData.map(field => 
+    <ConfirmationField
+      field={field}
+      key={field}
+    />)}
+    <button
+      type="submit"
+      onClick={props.handlePurchaseClick}
+    >Purchase</button>
+  </div>
+)
+
+const ConfirmationField = ({field}) => (
+  <div>
+    {console.log('field: ', field)}
+    {Object.keys(field)[0]}: {field[Object.keys(field)[0]]}
+  </div>
+)
 
 ReactDOM.render(<App />, document.getElementById('app'))

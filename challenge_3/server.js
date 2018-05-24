@@ -10,12 +10,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-  db.connection(req.body);
-  res.send('');
-});
-
-app.get('/result', (req, res) => {
-  db.connection((result) => {
-    res.send(result);
+  db.insertData(req.body, (id) => {
+    res.send(id);
   });
 });
